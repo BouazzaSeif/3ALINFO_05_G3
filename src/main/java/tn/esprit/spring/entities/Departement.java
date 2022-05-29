@@ -1,17 +1,15 @@
-
 package tn.esprit.spring.entities;
 
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -23,16 +21,35 @@ public class Departement implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id;
+	private int id;
 	
 	private String name;
 	
-	@JsonIgnore
-	@ManyToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
-	private List<Employe> employes;
-	 
 	@ManyToOne
 	private Entreprise entreprise;
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@JsonIgnore
+	@ManyToMany
+	private List<Employe> employes;
+	
+	@OneToMany(mappedBy="departement")
+	private List<Mission> missions;
+	
+
 
 	public Departement() {
 		super();
@@ -41,12 +58,12 @@ public class Departement implements Serializable {
 	public Departement(String name) {
 		this.name = name;
 	}
-	 
-	public Long getId() {
+	
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -66,6 +83,14 @@ public class Departement implements Serializable {
 		this.employes = employes;
 	}
 
+	public List<Mission> getMissions() {
+		return missions;
+	}
+
+	public void setMissions(List<Mission> missions) {
+		this.missions = missions;
+	}
+
 	public Entreprise getEntreprise() {
 		return entreprise;
 	}
@@ -73,6 +98,7 @@ public class Departement implements Serializable {
 	public void setEntreprise(Entreprise entreprise) {
 		this.entreprise = entreprise;
 	}
-	 
+	
+	
+
 }
- 

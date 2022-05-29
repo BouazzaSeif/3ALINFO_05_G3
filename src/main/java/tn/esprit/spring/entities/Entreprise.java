@@ -1,7 +1,6 @@
 package tn.esprit.spring.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -15,21 +14,29 @@ import javax.persistence.OneToMany;
 @Entity
 public class Entreprise implements Serializable{
 	
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 3152690779535828408L;
 
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id;
+	private int id;
 	
 	private String name;
 	
 	private String raisonSocial;
 	
 	@OneToMany(mappedBy="entreprise", 
+			
 			cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, 
 			fetch=FetchType.EAGER)
-	private List<Departement> departements = new ArrayList<>();
+	
+	private List<Departement> departements;
 
+	
+	
 	public Entreprise() {
 		super();
 	}
@@ -38,7 +45,15 @@ public class Entreprise implements Serializable{
 		this.name = name;
 		this.raisonSocial = raisonSocial;
 	}
- 
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -62,13 +77,14 @@ public class Entreprise implements Serializable{
 	public void setDepartements(List<Departement> departements) {
 		this.departements = departements;
 	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 	
+	
+	public void addDepartement(Departement departement){
+		departement.setEntreprise(this);
+		this.departements.add(departement);
+	}
+
+
+
+
 }

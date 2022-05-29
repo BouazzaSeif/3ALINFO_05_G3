@@ -11,8 +11,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
 public class Contrat implements Serializable {
 	
@@ -20,18 +18,17 @@ public class Contrat implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long reference;
+	private int reference;
 	
 	@Temporal(TemporalType.DATE)
 	private Date dateDebut;
-	 
+	
 	private String typeContrat;
- 
-	@JsonIgnore
-	@OneToOne(mappedBy="contrat")
-	private Employe employe;
-
+	
 	private float salaire;
+	
+	@OneToOne
+	private Employe employe;
 
 	public Contrat() {
 		super();
@@ -51,12 +48,12 @@ public class Contrat implements Serializable {
 	public void setDateDebut(Date dateDebut) {
 		this.dateDebut = dateDebut;
 	}
- 
-	public Long getReference() {
+
+	public int getReference() {
 		return reference;
 	}
 
-	public void setReference(Long reference) {
+	public void setReference(int reference) {
 		this.reference = reference;
 	}
 
@@ -83,5 +80,6 @@ public class Contrat implements Serializable {
 	public void setEmploye(Employe employe) {
 		this.employe = employe;
 	}
- 
+	
+	
 }
