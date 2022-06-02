@@ -1,6 +1,8 @@
 package tn.esprit.spring;
 
-import org.junit.jupiter.api.BeforeEach;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,23 +14,17 @@ import tn.esprit.spring.entities.Departement;
 import tn.esprit.spring.repository.DepartementRepository;
 import tn.esprit.spring.services.DepartementServiceImpl;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.BDDMockito.given;
-
-
-
 @ExtendWith(MockitoExtension.class)
 class DepartementServiceUnitTests {
 
 	@Mock
 	private DepartementRepository DepartementRepository;
 
-	
-
 	@InjectMocks
 	private DepartementServiceImpl DepartementService;
 
 	private Departement departement;
+
 	@DisplayName("JUnit test for ajouter departement method")
 	@Test
 	void testAjouterDepartement() {

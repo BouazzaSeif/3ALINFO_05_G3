@@ -17,46 +17,43 @@ import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
 @Entity
 public class Employe implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
+
 	private String prenom;
-	
+
 	private String nom;
-	
-	@Column(unique=true)
+
+	@Column(unique = true)
 	private String email;
 
 	private boolean isActif;
-	
+
 	@Enumerated(EnumType.STRING)
 	private Role role;
-	
-	
+
 	@JsonIgnore
-	@ManyToMany(mappedBy="employes",fetch=FetchType.EAGER)
+	@ManyToMany(mappedBy = "employes", fetch = FetchType.EAGER)
 	private List<Departement> departements;
-	
+
 	@JsonIgnore
-	@OneToOne(mappedBy="employe")
+	@OneToOne(mappedBy = "employe")
 	private Contrat contrat;
-	
+
 	@JsonIgnore
-	@OneToMany(mappedBy="employe")
+	@OneToMany(mappedBy = "employe")
 	private List<Timesheet> timesheets;
-	
-	
+
 	public Employe() {
 		super();
 	}
-	
+
 	public Employe(String nom, String prenom, String email, boolean isActif, Role role) {
 		this.nom = nom;
 		this.prenom = prenom;
@@ -64,7 +61,7 @@ public class Employe implements Serializable {
 		this.isActif = isActif;
 		this.role = role;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -136,7 +133,5 @@ public class Employe implements Serializable {
 	public void setTimesheets(List<Timesheet> timesheets) {
 		this.timesheets = timesheets;
 	}
-	
-	
-	
+
 }

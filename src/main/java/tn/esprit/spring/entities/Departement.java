@@ -13,52 +13,35 @@ import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
 @Entity
 public class Departement implements Serializable {
 
 	private static final long serialVersionUID = -357738161698377833L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
+
 	private String name;
-	
+
 	@ManyToOne
 	private Entreprise entreprise;
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	@JsonIgnore
 	@ManyToMany
 	private List<Employe> employes;
-	
-	@OneToMany(mappedBy="departement")
-	private List<Mission> missions;
-	
 
+	@OneToMany(mappedBy = "departement")
+	private List<Mission> missions;
 
 	public Departement() {
 		super();
 	}
-	
+
 	public Departement(String name) {
 		this.name = name;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -98,7 +81,5 @@ public class Departement implements Serializable {
 	public void setEntreprise(Entreprise entreprise) {
 		this.entreprise = entreprise;
 	}
-	
-	
 
 }
