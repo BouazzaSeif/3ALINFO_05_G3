@@ -20,8 +20,8 @@ pipeline {
                  bat 'mvn org.codehaus.mojo:sonar-maven-plugin:sonar -Dsonar.host.url=http://localhost:9000/'
            }
        }
-        stage('Run test') {
-       /*    steps {
+      /*  stage('Run test') {
+           steps {
                  bat 'mvn test '
            }
        } */
