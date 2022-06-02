@@ -93,7 +93,7 @@ public class UserServiceImpl implements IUserService {
 		User u = null;
 		try {
 			l.debug("In Method retrieveUser() :");
-             
+
 			u = userRepository.findById(Long.parseLong(id)).isPresent()
 					? userRepository.findById(Long.parseLong(id)).get()
 					: null;

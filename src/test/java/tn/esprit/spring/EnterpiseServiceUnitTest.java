@@ -1,5 +1,11 @@
 package tn.esprit.spring;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
+
+import java.text.ParseException;
+import java.util.Random;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,13 +19,6 @@ import tn.esprit.spring.entities.Entreprise;
 import tn.esprit.spring.repository.DepartementRepository;
 import tn.esprit.spring.repository.EntrepriseRepository;
 import tn.esprit.spring.services.EntrepriseServiceImpl;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.BDDMockito.given;
-
-import java.text.ParseException;
-
-import java.util.Random;
 
 @ExtendWith(MockitoExtension.class)
 class EntrepriseServiceUnitTests {
@@ -50,5 +49,4 @@ class EntrepriseServiceUnitTests {
 		assertThat(idSavedEntreprisee).isPositive();
 	}
 
-	
 }

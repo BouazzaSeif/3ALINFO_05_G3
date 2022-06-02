@@ -16,51 +16,49 @@ import tn.esprit.spring.entities.User;
 import tn.esprit.spring.services.IUserService;
 
 // userRestControl
-@RestController // = @Controller + @ResponseBody 
+@RestController // = @Controller + @ResponseBody
 //@Scope("session") 
 // singleton c'est par défaut 
 // prototype 
 // request 
 public class UserRestController {
 
-	// Couplage Faible 
-	@Autowired 
-	IUserService userService; 
- 
+	// Couplage Faible
+	@Autowired
+	IUserService userService;
+
 	// URL : http://localhost:????/????/retrieve-all-users
 	@GetMapping("/retrieve-all-users")
 	public List<User> retrieveAllUsers() {
 		List<User> list = userService.retrieveAllUsers();
 		return list;
 	}
- 
+
 	// http://localhost:????/timesheet-devops/retrieve-user/{user-id}
 	@GetMapping("/retrieve-user/{user-id}")
 	public User retrieveUser(@PathVariable("user-id") String userId) {
 		return userService.retrieveUser(userId);
 	}
 
-	// Ajouter User : http://localhost:????/timesheet-devops/add-user 
+	// Ajouter User : http://localhost:????/timesheet-devops/add-user
 	@PostMapping("/add-user")
 	public User addUser(@RequestBody User u) {
-		User user = userService.addUser(u); 
+		User user = userService.addUser(u);
 		return user;
 	}
 
-	
-	// Supprimer User : 
+	// Supprimer User :
 	// http://localhost:????/timesheet-devops/remove-user/{user-id}
-	@DeleteMapping("/remove-user/{user-id}") 
-	public void removeUser(@PathVariable("user-id") String userId) { 
+	@DeleteMapping("/remove-user/{user-id}")
+	public void removeUser(@PathVariable("user-id") String userId) {
 		userService.deleteUser(userId);
-	} 
+	}
 
-	// Modifier User 
-	// http://localhost:????/timesheet-devops/modify-user 
-	@PutMapping("/modify-user") 
+	// Modifier User
+	// http://localhost:????/timesheet-devops/modify-user
+	@PutMapping("/modify-user")
 	public User updateUser(@RequestBody User user) {
 		return userService.updateUser(user);
 	}
-	 
-} 
- 
+
+}

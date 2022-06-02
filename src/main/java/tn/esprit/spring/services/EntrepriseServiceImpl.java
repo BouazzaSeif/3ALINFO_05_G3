@@ -18,7 +18,7 @@ import tn.esprit.spring.repository.EntrepriseRepository;
 @Service
 @Slf4j
 public class EntrepriseServiceImpl implements IEntrepriseService {
-	  private static final Logger log=LogManager.getLogger(EntrepriseServiceImpl.class);
+	private static final Logger log = LogManager.getLogger(EntrepriseServiceImpl.class);
 
 	@Autowired
 	EntrepriseRepository entrepriseRepoistory;
@@ -27,26 +27,25 @@ public class EntrepriseServiceImpl implements IEntrepriseService {
 
 	public int ajouterEntreprise(Entreprise entreprise) {
 		log.info("ajouterEntreprise lancé");
-		try{
+		try {
 			entrepriseRepoistory.save(entreprise);
-			log.info("L'entreprise="+entreprise.getId()+" ajoutée");
-			
-		}
-		catch (Exception e){
-			log.error("ajouterEnterprise echoué, plus de detail "+e);
+			log.info("L'entreprise=" + entreprise.getId() + " ajoutée");
+
+		} catch (Exception e) {
+			log.error("ajouterEnterprise echoué, plus de detail " + e);
 		}
 		return entreprise.getId();
 	}
 
 	public int ajouterDepartement(Departement dep) {
 		log.info("ajouterDepartement lancé");
-		try{
-		deptRepoistory.save(dep);
-		log.info("le Departement ="+dep.getId()+" ajouté");
+		try {
+			deptRepoistory.save(dep);
+			log.info("le Departement =" + dep.getId() + " ajouté");
+		} catch (Exception e) {
+			log.error("ajouterDepartement echoué, plus de detail " + e);
 		}
-		catch (Exception e){
-			log.error("ajouterDepartement echoué, plus de detail "+e);
-		}		return dep.getId();
+		return dep.getId();
 	}
 
 	public void affecterDepartementAEntreprise(int depId, int entrepriseId) {
@@ -56,18 +55,17 @@ public class EntrepriseServiceImpl implements IEntrepriseService {
 		// Rappel : la classe qui contient mappedBy represente le bout Slave
 		// Rappel : Dans une relation oneToMany le mappedBy doit etre du cote one.
 		log.info("affecterDepartementAEntreprise lancé");
-		try{
-		Entreprise entrepriseManagedEntity = entrepriseRepoistory.findById(entrepriseId).orElseThrow(null);
-		Departement depManagedEntity = deptRepoistory.findById(depId).orElseThrow(null);
+		try {
+			Entreprise entrepriseManagedEntity = entrepriseRepoistory.findById(entrepriseId).orElseThrow(null);
+			Departement depManagedEntity = deptRepoistory.findById(depId).orElseThrow(null);
 
-		depManagedEntity.setEntreprise(entrepriseManagedEntity);
-		deptRepoistory.save(depManagedEntity);
-		log.info("affecterDepartementAEntreprise fini avec success");
+			depManagedEntity.setEntreprise(entrepriseManagedEntity);
+			deptRepoistory.save(depManagedEntity);
+			log.info("affecterDepartementAEntreprise fini avec success");
 
+		} catch (Exception e) {
+			log.error("affecterDepartement echoué, plus de detail " + e);
 		}
-		catch (Exception e){
-			log.error("affecterDepartement echoué, plus de detail "+e);
-		}	
 
 	}
 
@@ -75,65 +73,61 @@ public class EntrepriseServiceImpl implements IEntrepriseService {
 		log.info("getAllDepartementsNamesByEntreprise lancé");
 		Entreprise entrepriseManagedEntity = entrepriseRepoistory.findById(entrepriseId).orElseThrow(null);
 		List<String> depNames = new ArrayList<>();
-        try{
+		try {
 
-		for (Departement dep : entrepriseManagedEntity.getDepartements()) {
-			depNames.add(dep.getName());
+			for (Departement dep : entrepriseManagedEntity.getDepartements()) {
+				depNames.add(dep.getName());
 
+			}
+
+			log.info("getAllDepartementsNamesByEntreprise fini avec success");
+
+		} catch (Exception e) {
+			log.error("getAllDepartementsNamesByEntreprise echoué, plus de detail " + e);
 		}
-        
-    	log.info("getAllDepartementsNamesByEntreprise fini avec success");
-
-	}
-	catch (Exception e){
-		log.error("getAllDepartementsNamesByEntreprise echoué, plus de detail "+e);
-	}	
 		return depNames;
 
-
-
 	}
-    @Transactional
+
+	@Transactional
 
 	public void deleteEntrepriseById(int entrepriseId) {
 		log.info("deleteEntrepriseById lancé");
-    try{
-		entrepriseRepoistory.delete(entrepriseRepoistory.findById(entrepriseId).orElseThrow(null));
-        log.info("deleteEntrepriseById fini avec success");
+		try {
+			entrepriseRepoistory.delete(entrepriseRepoistory.findById(entrepriseId).orElseThrow(null));
+			log.info("deleteEntrepriseById fini avec success");
 
-        }
-    catch (Exception e){
-    	log.error("deleteEntrepriseById echoué, plus de detail "+e);
-    }
-}
-    @Transactional
+		} catch (Exception e) {
+			log.error("deleteEntrepriseById echoué, plus de detail " + e);
+		}
+	}
+
+	@Transactional
 	public void deleteDepartementById(int depId) {
 		log.info("deleteDepartementById lancé");
-		try{
-		deptRepoistory.delete(deptRepoistory.findById(depId).orElseThrow(null));
-		 log.info("deleteDepartementById fini avec success");
+		try {
+			deptRepoistory.delete(deptRepoistory.findById(depId).orElseThrow(null));
+			log.info("deleteDepartementById fini avec success");
 
-        }
-    catch (Exception e){
-    	log.error("deleteDepartementById echoué, plus de detail "+e);
-    }
-
+		} catch (Exception e) {
+			log.error("deleteDepartementById echoué, plus de detail " + e);
 		}
-
-	public Entreprise getEntrepriseById(int entrepriseId) {
-		Entreprise enterprise = null ;
-		log.info("getEntrepriseById lancé");
-		try{		 log.info("getEntrepriseById fini avec success");
-
-		 enterprise = entrepriseRepoistory.findById(entrepriseId).orElseThrow(null);
-
-        }
-    catch (Exception e){
-    	log.error("getEntrepriseById echoué, plus de detail "+e);
-    }
-		return enterprise;
 
 	}
 
+	public Entreprise getEntrepriseById(int entrepriseId) {
+		Entreprise enterprise = null;
+		log.info("getEntrepriseById lancé");
+		try {
+			log.info("getEntrepriseById fini avec success");
+
+			enterprise = entrepriseRepoistory.findById(entrepriseId).orElseThrow(null);
+
+		} catch (Exception e) {
+			log.error("getEntrepriseById echoué, plus de detail " + e);
+		}
+		return enterprise;
+
+	}
 
 }

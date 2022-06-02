@@ -1,5 +1,13 @@
 package tn.esprit.spring;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Optional;
+import java.util.Random;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,14 +22,6 @@ import tn.esprit.spring.entities.Role;
 import tn.esprit.spring.repository.ContratRepository;
 import tn.esprit.spring.repository.EmployeRepository;
 import tn.esprit.spring.services.EmployeServiceImpl;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.BDDMockito.given;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Optional;
-import java.util.Random;
 
 @ExtendWith(MockitoExtension.class)
 class EmployeServiceUnitTests {

@@ -8,9 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import tn.esprit.spring.entities.Mission;
-import tn.esprit.spring.entities.User;
 import tn.esprit.spring.repository.MissionRepository;
-import tn.esprit.spring.repository.UserRepository;
 
 @Service
 public class MissionServiceImpl implements IMissionService {
@@ -38,6 +36,7 @@ public class MissionServiceImpl implements IMissionService {
 
 		return missions;
 	}
+
 	@Override
 	public Mission addMission(Mission m) {
 		Mission mission_saved = null;
