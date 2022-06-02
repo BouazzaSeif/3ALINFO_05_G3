@@ -12,27 +12,27 @@ pipeline {
         }
         stage('build'){
             steps {
-                bat 'mvn clean install -DskipTests -X -f 3ALINFO_05_G3'
+                bat 'mvn clean install -DskipTests -X -f timesheet_devops'
             }
         }
         stage('Sonar') {
            steps {
-                 bat 'mvn org.codehaus.mojo:sonar-maven-plugin:sonar -Dsonar.host.url=http://localhost:9000/ -f 3ALINFO_05_G3'
+                 bat 'mvn org.codehaus.mojo:sonar-maven-plugin:sonar -Dsonar.host.url=http://localhost:9000/ -f timesheet_devops'
            }
        }
         stage('Run test') {
            steps {
-                 bat 'mvn test -f 3ALINFO_05_G3'
+                 bat 'mvn test -f timesheet_devops'
            }
        } 
         stage('Deploy on nexus') {
            steps {
-                 bat 'mvn deploy -DskipTests  -f 3ALINFO_05_G3'
+                 bat 'mvn deploy -DskipTests  -f timesheet_devops'
            }
         }
         stage('Build docker file'){
             steps {
-                bat 'mvn clean package docker:build -DskipTests -X -f 3ALINFO_05_G3'
+                bat 'mvn clean package docker:build -DskipTests -X -f timesheet_devops'
                 }
             }
         stage('Build docker image') {
