@@ -12,27 +12,27 @@ pipeline {
         }
         stage('build'){
             steps {
-                bat 'mvn clean install -DskipTests -X -f timesheet_devops'
+                bat 'mvn clean install -DskipTests -X '
             }
         }
         stage('Sonar') {
            steps {
-                 bat 'mvn org.codehaus.mojo:sonar-maven-plugin:sonar -Dsonar.host.url=http://localhost:9000/ -f timesheet_devops'
+                 bat 'mvn org.codehaus.mojo:sonar-maven-plugin:sonar -Dsonar.host.url=http://localhost:9000/'
            }
        }
         stage('Run test') {
            steps {
-                 bat 'mvn test -f timesheet_devops'
+                 bat 'mvn test '
            }
        } 
         stage('Deploy on nexus') {
            steps {
-                 bat 'mvn deploy -DskipTests  -f timesheet_devops'
+                 bat 'mvn deploy -DskipTests  '
            }
         }
         stage('Build docker file'){
             steps {
-                bat 'mvn clean package docker:build -DskipTests -X -f timesheet_devops'
+                bat 'mvn clean package docker:build -DskipTests -X '
                 }
             }
         stage('Build docker image') {
