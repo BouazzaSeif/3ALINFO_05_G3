@@ -23,7 +23,7 @@ class DepartementServiceUnitTests {
 	@InjectMocks
 	private DepartementServiceImpl DepartementService;
 
-	private Departement departement;
+	private Departement departement = new Departement("Informatique");
 
 	@DisplayName("JUnit test for ajouter departement method")
 	@Test
