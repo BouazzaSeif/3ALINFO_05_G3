@@ -21,10 +21,10 @@ pipeline {
            }
        }
         stage('Run test') {
-           steps {
+       /*    steps {
                  bat 'mvn test '
            }
-       } 
+       } */
         stage('Deploy on nexus') {
            steps {
                  bat 'mvn deploy -DskipTests  '
