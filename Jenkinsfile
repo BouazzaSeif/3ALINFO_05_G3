@@ -18,12 +18,7 @@ pipeline {
                 bat 'mvn clean install -DskipTests -X '
             }
         }
-        stage('Sonar') {
-            steps {
-                // bat 'mvn org.codehaus.mojo:sonar-maven-plugin:sonar -Dsonar.host.url=http://localhost:9000/'
-                bat 'mvn sonar:sonar'
-            }
-        }
+     
         stage('Run test') {
            steps {
                  bat 'mvn test '
