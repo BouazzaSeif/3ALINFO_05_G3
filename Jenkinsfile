@@ -31,22 +31,29 @@ pipeline {
                  bat 'mvn test '
            }
        } */
-      /*  stage('Deploy on nexus') {
+     /*   stage('Deploy on nexus') {
            steps {
                  bat 'mvn deploy -Dmaven.test.skip=true'
-           }
-           stage ('Publish')
+           }*/
+        stage('Publish')
            {
-           nexusPublisher nexusInstanceId: 'localnexus',
+            nexusPublisher nexusInstanceId: 'localnexus',
            nexusRepositoryId: 'maven-releases',
-           packages: [[$class: 'MavenPackage',
-           mavenAssetList: [],
-           mavenCoordinate: [artifactId: 'timesheet_devops', groupId: 'tn.esprit.spring', packaging: 'jar', version: '1.0']]]
-           steps {
-                 bat 'mvn deploy -Dmaven.test.skip=true'
+           packages: [
+                        [
+                            $class: 'MavenPackage',
+                            mavenAssetList: [],
+                            mavenCoordinate: [
+                                artifactId: 'timesheet_devops',
+                                groupId: 'tn.esprit.spring',
+                                packaging: 'jar', version: '1.0'
+                                ]
+                        ]
+                    ]
+            steps {
+                bat 'mvn deploy -Dmaven.test.skip=true'
+            }
            }
-           }
-        }*/
 
         stage('Building our image') {
             steps { script { dockerImage = docker.build registry + ":$BUILD_NUMBER" } }
@@ -56,20 +63,23 @@ pipeline {
             {
                 script
                  {
-                    docker.withRegistry('', registryCredential) {
+                    docker.withRegistry('', registryCredential)
+                     {
                         dockerImage.push()
-                    }
+                     }
                  }
             }
         }
         stage('Cleaning up') {
             steps { bat "docker rmi $registry:$BUILD_NUMBER" }
         }
-      /*  post {
+      /*  */
+     }
+    post {
             always {
                 deleteDir()
             }
-        }*/
     }
 }
+
 
