@@ -6,14 +6,13 @@ import tn.esprit.spring.entities.Contrat;
 
 public interface IContratService {
 
-	public int ajouterContrat(Contrat contrat);
+	List<Contrat> retrieveAllContrats();
 
-	public void mettreAjourEmailByContratId(String email, int contratId);
+	Contrat addContrat(Contrat u);
 
-	public void deleteContratById(int contratId);
+	void deleteContrat(String id);
 
-	public List<String> getAllContratJPQL();
+	Contrat updateContrat(Contrat u);
 
-	public void mettreAjourContractId(int contratId);
-
+	Contrat retrieveContrat(String id);
 }

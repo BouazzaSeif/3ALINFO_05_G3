@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.extern.slf4j.Slf4j;
 import tn.esprit.spring.entities.Departement;
+import tn.esprit.spring.entities.Employe;
 import tn.esprit.spring.entities.Entreprise;
 import tn.esprit.spring.repository.DepartementRepository;
 import tn.esprit.spring.repository.EntrepriseRepository;
@@ -19,115 +20,92 @@ import tn.esprit.spring.repository.EntrepriseRepository;
 @Slf4j
 public class EntrepriseServiceImpl implements IEntrepriseService {
 	private static final Logger log = LogManager.getLogger(EntrepriseServiceImpl.class);
-
+	
 	@Autowired
-	EntrepriseRepository entrepriseRepoistory;
-	@Autowired
-	DepartementRepository deptRepoistory;
+	EntrepriseRepository entrepriseRepository;
 
-	public int ajouterEntreprise(Entreprise entreprise) {
-		log.info("ajouterEntreprise lancé");
-		try {
-			entrepriseRepoistory.save(entreprise);
-			log.info("L'entreprise=" + entreprise.getId() + " ajoutée");
-
-		} catch (Exception e) {
-			log.error("ajouterEnterprise echoué, plus de detail " + e);
-		}
-		return entreprise.getId();
-	}
-
-	public int ajouterDepartement(Departement dep) {
-		log.info("ajouterDepartement lancé");
-		try {
-			deptRepoistory.save(dep);
-			log.info("le Departement =" + dep.getId() + " ajouté");
-		} catch (Exception e) {
-			log.error("ajouterDepartement echoué, plus de detail " + e);
-		}
-		return dep.getId();
-	}
-
-	public void affecterDepartementAEntreprise(int depId, int entrepriseId) {
-		// Le bout Master de cette relation N:1 est departement
-		// donc il faut rajouter l'entreprise a departement
-		// ==> c'est l'objet departement(le master) qui va mettre a jour l'association
-		// Rappel : la classe qui contient mappedBy represente le bout Slave
-		// Rappel : Dans une relation oneToMany le mappedBy doit etre du cote one.
-		log.info("affecterDepartementAEntreprise lancé");
-		try {
-			Entreprise entrepriseManagedEntity = entrepriseRepoistory.findById(entrepriseId).orElseThrow(null);
-			Departement depManagedEntity = deptRepoistory.findById(depId).orElseThrow(null);
-
-			depManagedEntity.setEntreprise(entrepriseManagedEntity);
-			deptRepoistory.save(depManagedEntity);
-			log.info("affecterDepartementAEntreprise fini avec success");
-
-		} catch (Exception e) {
-			log.error("affecterDepartement echoué, plus de detail " + e);
-		}
-
-	}
-
-	public List<String> getAllDepartementsNamesByEntreprise(int entrepriseId) {
-		log.info("getAllDepartementsNamesByEntreprise lancé");
-		Entreprise entrepriseManagedEntity = entrepriseRepoistory.findById(entrepriseId).orElseThrow(null);
-		List<String> depNames = new ArrayList<>();
+	@Override
+	public List<Entreprise> retrieveAllEntreprises() {
+		List<Entreprise> entreprises = null;
 		try {
 
-			for (Departement dep : entrepriseManagedEntity.getDepartements()) {
-				depNames.add(dep.getName());
-
+			log.info("In Method retrieveAllEntreprises :");
+			entreprises = (List<Entreprise>) entrepriseRepository.findAll();
+			log.debug("connexion à la DB Ok :");
+			for (Entreprise entreprise : entreprises) {
+				log.debug("Employe :" + entreprise.getName());
 			}
-
-			log.info("getAllDepartementsNamesByEntreprise fini avec success");
-
+			log.info("Out of Method retrieveAllEntreprises with Success" + entreprises.size());
 		} catch (Exception e) {
-			log.error("getAllDepartementsNamesByEntreprise echoué, plus de detail " + e);
+			log.error("Out of Method retrieveAllEntreprises with Errors : " + e);
 		}
-		return depNames;
 
+		return entreprises;
 	}
 
-	@Transactional
+	@Override
+	public Entreprise addEntreprise(Entreprise u) {
+		Entreprise entreprise = null;
 
-	public void deleteEntrepriseById(int entrepriseId) {
-		log.info("deleteEntrepriseById lancé");
 		try {
-			entrepriseRepoistory.delete(entrepriseRepoistory.findById(entrepriseId).orElseThrow(null));
-			log.info("deleteEntrepriseById fini avec success");
+			log.info("begin of the addEntreprise method  ");
+			entreprise = entrepriseRepository.save(u);
+			log.debug(u.getName() + " added successfully");
 
 		} catch (Exception e) {
-			log.error("deleteEntrepriseById echoué, plus de detail " + e);
+			log.error("Error in method addEntreprise with Errors : " + e);
 		}
+
+		return entreprise;
 	}
 
-	@Transactional
-	public void deleteDepartementById(int depId) {
-		log.info("deleteDepartementById lancé");
+	@Override
+	public void deleteEntreprise(String id) {
 		try {
-			deptRepoistory.delete(deptRepoistory.findById(depId).orElseThrow(null));
-			log.info("deleteDepartementById fini avec success");
+			log.debug("In Method deleteEntreprise() :");
+			entrepriseRepository.deleteById(Long.parseLong(id));
+			log.debug("Out of Method deleteEntreprise() with Success");
 
 		} catch (Exception e) {
-			log.error("deleteDepartementById echoué, plus de detail " + e);
-		}
-
+			log.error("error in deleteEntreprise() : " + e);
+		}			
 	}
 
-	public Entreprise getEntrepriseById(int entrepriseId) {
-		Entreprise enterprise = null;
-		log.info("getEntrepriseById lancé");
+	@Override
+	public Entreprise updateEntreprise(Entreprise u) {
+		Entreprise entrepriseUpdated = null;
+
 		try {
-			log.info("getEntrepriseById fini avec success");
-
-			enterprise = entrepriseRepoistory.findById(entrepriseId).orElseThrow(null);
+			log.debug("In Method updateEntreprise() :");
+			entrepriseUpdated =  entrepriseRepository.save(u);
+			log.debug("Out of Method updateEntreprise() with Success");
 
 		} catch (Exception e) {
-			log.error("getEntrepriseById echoué, plus de detail " + e);
+			log.error("Out of Method updateEntreprise() with Errors : " + e);
 		}
-		return enterprise;
 
+		return entrepriseUpdated;
 	}
+
+	@Override
+	public Entreprise retrieveEntreprise(String id) {
+		Entreprise entreprise = null;
+		try {
+			log.debug("In Method retrieveEmploye() :");
+
+			entreprise = entrepriseRepository.findById(Long.parseLong(id)).isPresent()
+					? entrepriseRepository.findById(Long.parseLong(id)).get()
+					: null;
+			log.debug("Out of Method retrieveEmploye() with Success");
+
+		} catch (Exception e) {
+			log.error("error in retrieveEmploye() : " + e);
+		}
+
+		return entreprise;
+	}
+
+
+
 
 }

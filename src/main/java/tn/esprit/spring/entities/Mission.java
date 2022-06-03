@@ -17,17 +17,11 @@ public class Mission implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Long id;
 
 	private String name;
 
 	private String description;
-
-	@ManyToOne
-	private Departement departement;
-
-	@OneToMany(mappedBy = "mission")
-	private List<Timesheet> timesheets;
 
 	public Mission() {
 		super();
@@ -38,11 +32,11 @@ public class Mission implements Serializable {
 		this.description = description;
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -62,20 +56,11 @@ public class Mission implements Serializable {
 		this.description = description;
 	}
 
-	public Departement getDepartement() {
-		return departement;
+	public Mission(Long id, String name, String description) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.description = description;
 	}
-
-	public void setDepartement(Departement departement) {
-		this.departement = departement;
-	}
-
-	public List<Timesheet> getTimesheets() {
-		return timesheets;
-	}
-
-	public void setTimesheets(List<Timesheet> timesheets) {
-		this.timesheets = timesheets;
-	}
-
+ 
 }

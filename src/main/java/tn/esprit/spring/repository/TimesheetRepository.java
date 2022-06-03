@@ -1,15 +1,13 @@
 package tn.esprit.spring.repository;
 
-import java.util.List;
-
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import tn.esprit.spring.entities.Entreprise;
+import tn.esprit.spring.entities.Timesheet;
+
 
 @Repository
-public interface EntrepriseRepository extends CrudRepository<Entreprise, Long>  {
-
-
+public interface TimesheetRepository extends CrudRepository<Timesheet, Long> {
+	
 }

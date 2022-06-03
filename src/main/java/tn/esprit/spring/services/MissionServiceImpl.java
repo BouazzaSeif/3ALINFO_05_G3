@@ -7,6 +7,8 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import tn.esprit.spring.entities.Employe;
+import tn.esprit.spring.entities.Entreprise;
 import tn.esprit.spring.entities.Mission;
 import tn.esprit.spring.repository.MissionRepository;
 
@@ -58,19 +60,48 @@ public class MissionServiceImpl implements IMissionService {
 
 	@Override
 	public void deleteMission(String id) {
-		// TODO Auto-generated method stub
+		try {
+			l.debug("In Method deleteMission() :");
+			missionRepository.deleteById(Long.parseLong(id));
+			l.debug("Out of Method deleteMission() with Success");
 
+		} catch (Exception e) {
+			l.error("error in deleteMission() : " + e);
+		}			
 	}
+	
 
 	@Override
 	public Mission updateMission(Mission m) {
-		// TODO Auto-generated method stub
-		return null;
+		Mission missionUpdated = null;
+
+		try {
+			l.debug("In Method updateMission() :");
+			missionUpdated =  missionRepository.save(m);
+			l.debug("Out of Method updateMission() with Success");
+
+		} catch (Exception e) {
+			l.error("Out of Method updateMission() with Errors : " + e);
+		}
+
+		return missionUpdated;
 	}
 
 	@Override
 	public Mission retrieveMission(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		Mission mission = null;
+		try {
+			l.debug("In Method retrieveMission() :");
+
+			mission = missionRepository.findById(Long.parseLong(id)).isPresent()
+					? missionRepository.findById(Long.parseLong(id)).get()
+					: null;
+			l.debug("Out of Method retrieveMission() with Success");
+
+		} catch (Exception e) {
+			l.error("error in retrieveMission() : " + e);
+		}
+
+		return mission;
 	}
 }

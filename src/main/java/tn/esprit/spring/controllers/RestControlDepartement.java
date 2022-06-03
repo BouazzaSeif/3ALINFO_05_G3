@@ -17,22 +17,4 @@ public class RestControlDepartement {
 	@Autowired
 	IDepartementService idepartementservice;
 
-	@PostMapping("/ajouterDepartement")
-	@ResponseBody
-	public int ajouterDepartement(@RequestBody Departement dep) {
-		return idepartementservice.ajouterDepartement(dep);
-	}
-
-	@DeleteMapping("/deleteDepartementById/{iddept}")
-	@ResponseBody
-	public void deleteDepartementById(@PathVariable("iddept") int depId) {
-		idepartementservice.deleteDepartementById(depId);
-	}
-
-	@GetMapping(value = "getDepartementById/{iddepartement}")
-	@ResponseBody
-	public Departement getDepartementById(@PathVariable("iddepartement") int departementId) {
-
-		return idepartementservice.getDepartementById(departementId);
-	}
 }

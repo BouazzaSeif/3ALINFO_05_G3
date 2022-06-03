@@ -1,17 +1,13 @@
 package tn.esprit.spring.entities;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Departement implements Serializable {
@@ -23,16 +19,8 @@ public class Departement implements Serializable {
 	private int id;
 
 	private String name;
-
-	@ManyToOne
-	private Entreprise entreprise;
-
-	@JsonIgnore
-	@ManyToMany
-	private List<Employe> employes;
-
-	@OneToMany(mappedBy = "departement")
-	private List<Mission> missions;
+	
+	private String etage ;
 
 	public Departement() {
 		super();
@@ -58,28 +46,28 @@ public class Departement implements Serializable {
 		this.name = name;
 	}
 
-	public List<Employe> getEmployes() {
-		return employes;
+	public String getEtage() {
+		return etage;
 	}
 
-	public void setEmployes(List<Employe> employes) {
-		this.employes = employes;
+	public void setEtage(String etage) {
+		this.etage = etage;
 	}
 
-	public List<Mission> getMissions() {
-		return missions;
+	public Departement(int id, String name, String etage) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.etage = etage;
 	}
 
-	public void setMissions(List<Mission> missions) {
-		this.missions = missions;
+	public Departement(String name, String etage) {
+		super();
+		this.name = name;
+		this.etage = etage;
 	}
 
-	public Entreprise getEntreprise() {
-		return entreprise;
-	}
-
-	public void setEntreprise(Entreprise entreprise) {
-		this.entreprise = entreprise;
-	}
+	
+	
 
 }
