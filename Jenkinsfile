@@ -1,5 +1,6 @@
 pipeline {
     environment {
+        EMAIL_RECIPIENTS = "seifeddine.bouazza@esprit.tn"
         registry = 'seifbouazza/devopsimage'
         registryCredential = 'dockerHub'
         dockerImage = ''
@@ -57,9 +58,24 @@ pipeline {
      }
     post {
             always {
+                 emailext(
+                        to: "${EMAIL_RECIPIENTS}",
+                        replyTo: "${EMAIL_RECIPIENTS}",
+                        subject:
+                         "[BuildResult][${currentBuild.currentResult}] - Job '${env.JOB_NAME}' (${env.BUILD_NUMBER})",
+                        mimeType: 'text/html',
+                        body:
+                        /* groovylint-disable-next-line GStringExpressionWithinString */
+                        '''${JELLY_SCRIPT, template="custom-html.jelly"}'''
+                        )
                 deleteDir()
-            }
+            }        
     }
+    
+     options {
+            buildDiscarder(logRotator(numToKeepStr: '4'))
+            timeout(time: 60, unit: 'MINUTES')
+        }
 }
 
 
