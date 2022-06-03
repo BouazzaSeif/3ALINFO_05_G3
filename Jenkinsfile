@@ -27,11 +27,11 @@ pipeline {
                 bat 'mvn sonar:sonar'
             }
         }
-      /*  stage('Run test') {
+        stage('Run test') {
            steps {
                  bat 'mvn test '
            }
-       } */
+       } 
        stage('Deploy on nexus') {
            steps {
                bat 'mvn deploy:deploy-file -DgroupId=tn.esprit.spring -DartifactId=timesheet_devops -Dversion=1.0 -DgeneratePom=true -Dpackaging=jar -DrepositoryId=deploymentRepo -Durl=http://localhost:8081/repository/maven-releases/ -Dfile=target/timesheet_devops-1.0.jar'
