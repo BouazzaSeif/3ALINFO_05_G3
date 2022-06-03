@@ -18,42 +18,5 @@ import tn.esprit.spring.services.IMissionService;
 @RestController
 public class MissionRestController {
 
-	// Couplage Faible
-	@Autowired
-	IMissionService missionService;
-
-	// URL : http://localhost:????/????/retrieve-all-users
-	@GetMapping("/retrieve-all-users")
-	public List<Mission> retrieveAllMissions() {
-		List<Mission> list = missionService.retrieveAllMissions();
-		return list;
-	}
-
-	// http://localhost:????/timesheet-devops/retrieve-mission/{mission-id}
-	@GetMapping("/retrieve-mission/{mission-id}")
-	public Mission retrieveMission(@PathVariable("mission-id") String missionId) {
-		return missionService.retrieveMission(missionId);
-	}
-
-	// Ajouter Mission : http://localhost:????/timesheet-devops/add-mission
-	@PostMapping("/add-mission")
-	public Mission addMission(@RequestBody Mission u) {
-		Mission mission = missionService.addMission(u);
-		return mission;
-	}
-
-	// Supprimer Mission :
-	// http://localhost:????/timesheet-devops/remove-mission/{mission-id}
-	@DeleteMapping("/remove-mission/{mission-id}")
-	public void removeMission(@PathVariable("mission-id") String missionId) {
-		missionService.deleteMission(missionId);
-	}
-
-	// Modifier Mission
-	// http://localhost:????/timesheet-devops/modify-mission
-	@PutMapping("/modify-mission")
-	public Mission updateMission(@RequestBody Mission mission) {
-		return missionService.updateMission(mission);
-	}
 
 }

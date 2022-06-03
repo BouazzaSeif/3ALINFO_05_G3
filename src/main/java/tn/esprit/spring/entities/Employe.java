@@ -24,7 +24,7 @@ public class Employe implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Long id;
 
 	private String prenom;
 
@@ -38,20 +38,19 @@ public class Employe implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private Role role;
 
-	@JsonIgnore
-	@ManyToMany(mappedBy = "employes", fetch = FetchType.EAGER)
-	private List<Departement> departements;
-
-	@JsonIgnore
-	@OneToOne(mappedBy = "employe")
-	private Contrat contrat;
-
-	@JsonIgnore
-	@OneToMany(mappedBy = "employe")
-	private List<Timesheet> timesheets;
 
 	public Employe() {
 		super();
+	}
+
+	public Employe(Long id, String prenom, String nom, String email, boolean isActif, Role role) {
+		super();
+		this.id = id;
+		this.prenom = prenom;
+		this.nom = nom;
+		this.email = email;
+		this.isActif = isActif;
+		this.role = role;
 	}
 
 	public Employe(String nom, String prenom, String email, boolean isActif, Role role) {
@@ -62,11 +61,11 @@ public class Employe implements Serializable {
 		this.role = role;
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -110,28 +109,5 @@ public class Employe implements Serializable {
 		this.role = role;
 	}
 
-	public List<Departement> getDepartements() {
-		return departements;
-	}
-
-	public void setDepartements(List<Departement> departement) {
-		this.departements = departement;
-	}
-
-	public Contrat getContrat() {
-		return contrat;
-	}
-
-	public void setContrat(Contrat contrat) {
-		this.contrat = contrat;
-	}
-
-	public List<Timesheet> getTimesheets() {
-		return timesheets;
-	}
-
-	public void setTimesheets(List<Timesheet> timesheets) {
-		this.timesheets = timesheets;
-	}
 
 }

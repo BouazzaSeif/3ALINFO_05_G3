@@ -1,52 +1,60 @@
 package tn.esprit.spring;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.BDDMockito.given;
-
 import java.text.ParseException;
-import java.util.Random;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Assertions;
+
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 
-import tn.esprit.spring.entities.Departement;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
 import tn.esprit.spring.entities.Contrat;
-import tn.esprit.spring.repository.DepartementRepository;
-import tn.esprit.spring.repository.ContratRepository;
-import tn.esprit.spring.services.ContratServiceImpl;
+import tn.esprit.spring.services.IContratService;
 
-@ExtendWith(MockitoExtension.class)
+@SpringBootTest
 class ContratServiceUnitTest {
 
-	@Mock
-	private ContratRepository contratRepository;
+	@Autowired
+	IContratService iContratService;
 
-	@Mock
-	private DepartementRepository departementtRepository;
-
-	@InjectMocks
-	private ContratServiceImpl contratService;
-
-	private Contrat contrat;
-	private Departement departement;
-
-	@BeforeEach
-	private void setup() throws ParseException {
-		contrat = new Contrat();
-		contrat.setReference(new Random().nextInt() & Integer.MAX_VALUE);
-	}
-
-	@DisplayName("JUnit test for ajouterContrat method")
 	@Test
-	void testAjouterContrat() {
-		given(contratRepository.save(contrat)).willReturn(contrat);
-		int idSavedContrat = contratService.ajouterContrat(contrat);
-		assertThat(idSavedContrat).isPositive();
+	@Order(1)
+	public void testRetrieveAllContrats() {
+		List<Contrat> listContrats = iContratService.retrieveAllContrats();
+		Assertions.assertEquals(listContrats.size(), listContrats.size());
 	}
 
+	@Test
+	@Order(2)
+	public void testAddContrat() throws ParseException {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date d = dateFormat.parse("2015-03-23");
+		Contrat u = new Contrat(d,"Contrat 1", 1);
+		Contrat ContratAdded = iContratService.addContrat(u);
+		Assertions.assertEquals(u.getReference(), ContratAdded.getReference());
+
+	}
+
+	@Test
+	@Order(3)
+	public void testModifyContrat() throws ParseException {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date d = dateFormat.parse("2015-03-23");
+		Contrat u = new Contrat(d,"Contrat 1", 1);
+		Contrat ContratUpdated = iContratService.updateContrat(u);
+		Assertions.assertEquals(u.getReference(), ContratUpdated.getReference());
+	}
+
+	@Test
+	@Order(4)
+	public void testDeleteContrat() {
+		iContratService.deleteContrat("1");
+		Assertions.assertNull(iContratService.retrieveContrat("1"));
+		Assertions.assertEquals(0, iContratService.retrieveAllContrats().size());
+	}
 }

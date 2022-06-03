@@ -21,17 +21,11 @@ public class Entreprise implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Long id;
 
 	private String name;
 
 	private String raisonSocial;
-
-	@OneToMany(mappedBy = "entreprise",
-
-			cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.EAGER)
-
-	private List<Departement> departements;
 
 	public Entreprise() {
 		super();
@@ -42,11 +36,11 @@ public class Entreprise implements Serializable {
 		this.raisonSocial = raisonSocial;
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -66,17 +60,12 @@ public class Entreprise implements Serializable {
 		this.raisonSocial = raisonSocial;
 	}
 
-	public List<Departement> getDepartements() {
-		return departements;
+	public Entreprise(Long id, String name, String raisonSocial) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.raisonSocial = raisonSocial;
 	}
 
-	public void setDepartements(List<Departement> departements) {
-		this.departements = departements;
-	}
-
-	public void addDepartement(Departement departement) {
-		departement.setEntreprise(this);
-		this.departements.add(departement);
-	}
 
 }

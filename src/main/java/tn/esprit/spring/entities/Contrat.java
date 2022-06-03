@@ -18,7 +18,7 @@ public class Contrat implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int reference;
+	private Long reference;
 	
 	@Temporal(TemporalType.DATE)
 	private Date dateDebut;
@@ -27,9 +27,6 @@ public class Contrat implements Serializable {
 	
 	private float salaire;
 	
-	@OneToOne
-	private Employe employe;
-
 	public Contrat() {
 		super();
 	}
@@ -41,6 +38,14 @@ public class Contrat implements Serializable {
 	}
 
 
+	public Contrat(Long reference, Date dateDebut, String typeContrat, float salaire) {
+		super();
+		this.reference = reference;
+		this.dateDebut = dateDebut;
+		this.typeContrat = typeContrat;
+		this.salaire = salaire;
+	}
+
 	public Date getDateDebut() {
 		return dateDebut;
 	}
@@ -49,11 +54,11 @@ public class Contrat implements Serializable {
 		this.dateDebut = dateDebut;
 	}
 
-	public int getReference() {
+	public Long getReference() {
 		return reference;
 	}
 
-	public void setReference(int reference) {
+	public void setReference(Long reference) {
 		this.reference = reference;
 	}
 
@@ -71,15 +76,6 @@ public class Contrat implements Serializable {
 
 	public void setSalaire(float salaire) {
 		this.salaire = salaire;
-	}
-
-	public Employe getEmploye() {
-		return employe;
-	}
-
-	public void setEmploye(Employe employe) {
-		this.employe = employe;
-	}
-	
+	}	
 	
 }
