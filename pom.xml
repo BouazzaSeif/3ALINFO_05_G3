@@ -11,6 +11,7 @@
 	<groupId>tn.esprit.spring</groupId>
 	<artifactId>timesheet_devops</artifactId>
 	<version>1.0</version>
+	<packaging>jar</packaging>
 	<name>timesheet_devops</name>
 	<description>project for Spring Boot devOps </description>
 	<properties>
@@ -62,11 +63,15 @@
 			</plugin>
 		</plugins>
 	</build>
-	<distributionManagement>
-	  <repository>
-		<id>deploymentRepo</id>
-		<url>http://localhost:8081/repository/maven-releases/</url>
-	  </repository>
-	</distributionManagement>
+<distributionManagement>
+	<snapshotRepository>
+	<id>nexus-snapshots</id>
+	<url>http://localhost:8081/nexus/content/repositories/snapshots/</url>
+	</snapshotRepository>
+	<repository>
+	<id>nexus-releases</id>
+	<url>http://localhost:8081/nexus/content/repositories/releases/</url>
+	</repository>
+</distributionManagement>
 
 </project>
