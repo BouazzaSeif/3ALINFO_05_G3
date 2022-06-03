@@ -64,8 +64,8 @@
 	</build>
 	<distributionManagement>
 	  <repository>
-		<id>nexus-releases</id>
-		<url>http://localhost:8081/repository/repo-snapshot-releases/</url>
+		<id>deploymentRepo</id>
+		<url>http://localhost:8081/repository/deploymentRepo/</url>
 	  </repository>
 	</distributionManagement>
 
