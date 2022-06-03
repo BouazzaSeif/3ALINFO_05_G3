@@ -1,16 +1,13 @@
 pipeline {
     environment {
+        maven = tool 'maven350'
         EMAIL_RECIPIENTS = "seifeddine.bouazza@esprit.tn"
         registry = 'seifbouazza/devopsimage'
         registryCredential = 'dockerHub'
         dockerImage = ''
     }
     agent any
-    tools {
-        maven 'maven'
-        jdk 'jdk'
-    }
-    stages {
+     stages {
         stage('cloning project') {
             steps {
                 git 'https://github.com/BouazzaSeif/3ALINFO_05_G3.git'
