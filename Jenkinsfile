@@ -61,7 +61,7 @@ bat 'mvn clean package -Dmaven.test.skip=true deploy:deploy-file -DgroupId=tn.es
      }
     post {
             always {
-                 emailext(
+                 mail(
                         to: "${EMAIL_RECIPIENTS}",
                         replyTo: "${EMAIL_RECIPIENTS}",
                         subject:
