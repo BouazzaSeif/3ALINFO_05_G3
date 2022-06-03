@@ -39,8 +39,7 @@ pipeline {
         }
        stage('Deploy on nexus') {
            steps {
-                bat "mvn deploy:deploy-file -DgroupId=tn.esprit.spring -DartifactId=timesheet_devops -Dversion=1.0 -DgeneratePom=true -Dpackaging=jar -DrepositoryId=deploymentRepo
- -Durl=http://localhost:8081/repository/deploymentRepo/ -Dfile=target/timesheet_devops-1.0.war"
+               bat 'mvn deploy:deploy-file -DgroupId=tn.esprit.spring -DartifactId=timesheet_devops -Dversion=1.0 -DgeneratePom=true -Dpackaging=jar -DrepositoryId=deploymentRepo -Durl=http://localhost:8081/repository/maven-releases/ -Dfile=target/timesheet_devops-1.0.jar -f timesheet_devops
            }
        }
         stage('Build Docker image') {
