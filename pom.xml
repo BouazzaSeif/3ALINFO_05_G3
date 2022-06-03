@@ -62,9 +62,11 @@
 			</plugin>
 		</plugins>
 	</build>
-	<repository>
+	<distributionManagement>
+	  <repository>
 		<id>nexus-releases</id>
 		<url>http://localhost:8081/repository/repo-snapshot-releases/</url>
-	</repository>
+	  </repository>
+	</distributionManagement>
 
 </project>
