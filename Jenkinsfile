@@ -34,8 +34,7 @@ pipeline {
        } */
        stage('Deploy on nexus') {
            steps {
-                 cat settings.xml
-                 bat 'mvn deploy -Dmaven.test.skip=true'
+              bat 'mvn deploy -Dmaven.test.skip=true'
            }
        }
         stage('Build Docker image') {
