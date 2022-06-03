@@ -31,11 +31,22 @@ dockerImage = ''
                  bat 'mvn test '
            }
        } */
-        stage('Deploy on nexus') {
+      /*  stage('Deploy on nexus') {
            steps {
                  bat 'mvn deploy -Dmaven.test.skip=true'
            }
-        }
+           stage ('Publish')
+           {
+           nexusPublisher nexusInstanceId: 'localnexus',
+           nexusRepositoryId: 'maven-releases',
+           packages: [[$class: 'MavenPackage', 
+           mavenAssetList: [],
+           mavenCoordinate: [artifactId: 'timesheet_devops', groupId: 'tn.esprit.spring', packaging: 'jar', version: '1.0']]]
+           steps {
+                 bat 'mvn deploy -Dmaven.test.skip=true'
+           }
+}
+        }*/
        
      stage('Building our image') {
     steps { script { dockerImage= docker.build registry + ":$BUILD_NUMBER" } }
