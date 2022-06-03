@@ -34,7 +34,7 @@ pipeline {
        } */
         stage('Publish') {
             steps {
-                nexusPublisher nexusInstanceId: 'localnexus', nexusRepositoryId: 'repo-snapshot-releases', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: '', filePath: 'target/timesheet_devops.jar']], mavenCoordinate: [artifactId: 'timesheet_devops', groupId: 'tn.esprit.spring', packaging: 'jar', version: '1.0']]]
+                nexusPublisher nexusInstanceId: 'localnexus', nexusRepositoryId: 'repo-snapshot-releases', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: '', filePath: 'target/timesheet_devops-1.0.jar']], mavenCoordinate: [artifactId: 'timesheet_devops', groupId: 'tn.esprit.spring', packaging: 'jar', version: '1.0']]]
         }
         }
        stage('Deploy on nexus') {
