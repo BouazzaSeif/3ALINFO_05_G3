@@ -35,8 +35,7 @@ pipeline {
            steps {
                  bat 'mvn deploy -Dmaven.test.skip=true'
            }
-      
-
+       }
         stage('Build Docker image') {
             steps { script { dockerImage = docker.build registry + ":$BUILD_NUMBER" } }
         }
