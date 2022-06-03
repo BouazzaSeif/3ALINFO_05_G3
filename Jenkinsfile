@@ -1,6 +1,6 @@
 pipeline {
     environment {
-        maven = tool 'maven350'
+        maven = tool 'maven'
         EMAIL_RECIPIENTS = "seifeddine.bouazza@esprit.tn"
         registry = 'seifbouazza/devopsimage'
         registryCredential = 'dockerHub'
@@ -17,16 +17,20 @@ pipeline {
             steps {
                 bat 'mvn clean install -DskipTests -X '
             }
-        }
-     
+        }     
         stage('Run test') {
            steps {
                  bat 'mvn test '
            }
        } 
+           stage('Sonar') {
+            steps {
+               bat 'mvn sonar:sonar'
+            }
+        }
        stage('Deploy on nexus') {
            steps {
-bat 'mvn clean package -Dmaven.test.skip=true deploy:deploy-file -DgroupId=tn.esprit.spring -DartifactId=timesheet -Dversion=1.0 -DgeneratePom=true -Dpackaging=jar  -DrepositoryId=deploymentRepo -Durl=http://localhost:8081/repository/maven-releases/ -Dfile=target/timesheet_devops-1.0.jar'
+                bat 'mvn clean package -Dmaven.test.skip=true deploy:deploy-file -DgroupId=tn.esprit.spring -DartifactId=timesheet -Dversion=1.0 -DgeneratePom=true -Dpackaging=jar  -DrepositoryId=deploymentRepo -Durl=http://localhost:8081/repository/maven-releases/ -Dfile=target/timesheet_devops-1.0.jar'
            }
        }
         stage('Build Docker image') {
