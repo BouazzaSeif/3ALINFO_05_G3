@@ -34,12 +34,12 @@ pipeline {
        } */
         stage('Publish') {
             steps {
-                nexusPublisher nexusInstanceId: 'localnexus', nexusRepositoryId: 'repo-snapshot-releases', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: '', filePath: 'target/timesheet_devops-1.0.jar']], mavenCoordinate: [artifactId: 'timesheet_devops', groupId: 'tn.esprit.spring', packaging: 'jar', version: '1.0']]]
+                nexusPublisher nexusInstanceId: 'localnexus', nexusRepositoryId: 'repo-snapshot-releases', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: '']], mavenCoordinate: [artifactId: 'timesheet_devops', groupId: 'tn.esprit.spring', packaging: 'jar', version: '1.0']]]
         }
         }
        stage('Deploy on nexus') {
            steps {
-              bat 'mvn deploy:deploy-file -Dmaven.test.skip=true -s C:\Users\matsa\OneDrive\Desktop\apache-maven-3.5.0\conf\settings.xml'
+              bat 'mvn deploy -Dmaven.test.skip=true'
            }
        }
         stage('Build Docker image') {
