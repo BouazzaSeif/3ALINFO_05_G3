@@ -32,14 +32,9 @@ pipeline {
                  bat 'mvn test '
            }
        } */
-        stage('Publish') {
-            steps {
-                nexusPublisher nexusInstanceId: 'localnexus', nexusRepositoryId: 'repo-snapshot-releases', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: '']], mavenCoordinate: [artifactId: 'timesheet_devops', groupId: 'tn.esprit.spring', packaging: 'jar', version: '1.0']]]
-        }
-        }
        stage('Deploy on nexus') {
            steps {
-               bat 'mvn deploy:deploy-file -DgroupId=tn.esprit.spring -DartifactId=timesheet_devops -Dversion=1.0 -DgeneratePom=true -Dpackaging=jar -DrepositoryId=deploymentRepo -Durl=http://localhost:8081/repository/maven-releases/ -Dfile=target/timesheet_devops-1.0.jar -f timesheet_devops'
+               bat 'mvn deploy:deploy-file -DgroupId=tn.esprit.spring -DartifactId=timesheet_devops -Dversion=1.0 -DgeneratePom=true -Dpackaging=jar -DrepositoryId=deploymentRepo -Durl=http://localhost:8081/repository/maven-releases/ -Dfile=target/timesheet_devops-1.0.jar'
            }
        }
         stage('Build Docker image') {
