@@ -24,6 +24,12 @@ pipeline {
                  bat 'mvn test '
            }
        } 
+         stage('Sonar') {
+            steps {
+                // bat 'mvn org.codehaus.mojo:sonar-maven-plugin:sonar -Dsonar.host.url=http://localhost:9000/'
+                bat 'mvn sonar:sonar'
+            }
+        }
        stage('Deploy on nexus') {
            steps {
 bat 'mvn clean package -Dmaven.test.skip=true deploy:deploy-file -DgroupId=tn.esprit.spring -DartifactId=timesheet -Dversion=1.0 -DgeneratePom=true -Dpackaging=jar  -DrepositoryId=deploymentRepo -Durl=http://localhost:8081/repository/maven-releases/ -Dfile=target/timesheet_devops-1.0.jar'
