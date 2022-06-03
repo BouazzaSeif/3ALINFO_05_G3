@@ -39,7 +39,7 @@ pipeline {
         }
        stage('Deploy on nexus') {
            steps {
-              bat 'mvn deploy -Dmaven.test.skip=true'
+              bat 'mvn deploy:deploy-file -Dmaven.test.skip=true -s C:\Users\matsa\OneDrive\Desktop\apache-maven-3.5.0\conf\settings.xml'
            }
        }
         stage('Build Docker image') {
