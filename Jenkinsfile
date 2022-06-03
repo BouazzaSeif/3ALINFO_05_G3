@@ -6,7 +6,12 @@ pipeline {
         registryCredential = 'dockerHub'
         dockerImage = ''
     }
+    
     agent any
+    tools {
+         maven 'maven350'
+        jdk 'jdk'
+    }
      stages {
         stage('cloning project') {
             steps {
