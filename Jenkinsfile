@@ -69,7 +69,7 @@ bat 'mvn clean package -Dmaven.test.skip=true deploy:deploy-file -DgroupId=tn.es
                         mimeType: 'text/html',
                         body:
                         /* groovylint-disable-next-line GStringExpressionWithinString */
-                        '''${JELLY_SCRIPT, template="custom-html.jelly"}'''
+                        "Hello ,our runner finish the build with Status ${currentBuild.currentResult} on ${env.JOB_NAME} project"
                         )
                 deleteDir()
             }        
